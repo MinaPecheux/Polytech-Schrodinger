@@ -31,11 +31,19 @@ eigen_values, eigen_vectors = np.linalg.eigh(H)
 x_values = np.arange(x_min, x_max, delta_x)
 
 # graphic representation of the first modes
-for i in range(0, 2):
+for i in range(0, 4):
     # we get the right psi values = the corresponding eigen vector
     # of the H matrix
+
+    # HOW IT WORKS:
+    # > the eigen vectors are COLUMN VECTORS!
+    # > and it gives you an oscillating curve, then you switch one point out of two to get back your sinus...
+    # (I don't know why?)
     y_values = [sin((i+1)*pi*x/x_max) for x in x_values]  # analytic solution
-    y_values2 = eigen_vectors[i]                            # using the H eigen vectors
+    y_values2 = eigen_vectors[:, i]                       # using the H eigen vectors
+    inverse_index = next((k for k, v in enumerate(y_values2) if v < 0), -1)
+    for j in range(inverse_index, len(y_values2), 2):
+        y_values2[j] = -y_values2[j]
     # we plot the both results against the x values
     plt.figure(1)
     plt.plot(x_values, y_values, label='mode %d' % (i+1))
