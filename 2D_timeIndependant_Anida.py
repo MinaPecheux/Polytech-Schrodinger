@@ -54,11 +54,11 @@ fig1, fig2 = plt.figure(1), plt.figure(2)
 ax1, ax2 = fig1.gca(projection='3d'), fig2.gca(projection='3d')
 
 # orbitals that we want to compute
-energy = 3
+energy = 4
 nx, ny = 2, 2
 
 # analytic solution representation: psi^2 = presence probability
-Z = (2/sqrt(lx*ly) * np.multiply(np.sin(nx * np.pi * X/lx), np.sin(ny * np.pi * Y/ly))) ** 2
+Z = (2/sqrt(lx*ly) * np.multiply(np.sin(nx * np.pi * np.asarray([x + lx / 2 for x in X])/lx), np.sin(ny * np.pi * np.asarray([y + ly / 2 for y in Y])/ly))) ** 2
 
 # we plot the result against the x values
 ax1.plot_surface(X, Y, Z, linewidth=0, antialiased=True)
