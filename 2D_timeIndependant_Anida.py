@@ -39,9 +39,9 @@ laplacian_x =  1 / delta_x**2 * (-2*np.eye(n*n) + np.diag(Diag_SupInf, -1) + np.
 laplacian_y =  1 / delta_y**2 * (-2*np.eye(n*n) + np.diag(np.ones(n*n - n), n) + np.diag(np.ones(n*n - n), -n))
 laplacian = -0.5 * (laplacian_x + laplacian_y)
 
-V0 = np.zeros((n*n, n*n))                                                # null potential
-#V1 = np.asarray([x ** 2 for x in x_values])                     # harmonic potential
-#V2 = np.asarray([abs(round(sin(3*x))) for x in x_values])       # rectangular potential
+V0 = np.zeros((n*n, n*n))                                    # null potential
+#V1 = np.asarray([x ** 2 for x in X])                         # harmonic potential
+#V2 = np.diag([0.5 if abs(x) < 2.0 else 0 for x in X])        # rectangular potential
 # here you choose which potential you add:
 H = laplacian + V0
 # we get the eigen vectors of the H matrix
@@ -54,7 +54,7 @@ fig1, fig2 = plt.figure(1), plt.figure(2)
 ax1, ax2 = fig1.gca(projection='3d'), fig2.gca(projection='3d')
 
 # orbitals that we want to compute
-energy = 4
+energy = 1
 nx, ny = 2, 2
 
 # analytic solution representation: psi^2 = presence probability
