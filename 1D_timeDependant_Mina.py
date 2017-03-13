@@ -14,13 +14,13 @@ from math import exp
 
 
 # general variables
-x_min = -8.
-x_max = 8.
+x_min = -50.
+x_max = 50.
 delta_x = 0.1
-x0 = -1.
-sigma = 0.5
-delta_t = 0.1       # time difference between two steps
-nb_steps = 2         # nb of steps to compute (so we get the final psi)
+x0 = 0.
+sigma = 1
+delta_t = 0.5       # time difference between two steps
+nb_steps = 100         # nb of steps to compute (so we get the final psi)
 
 # we make the space discrete
 x_values = np.arange(x_min, x_max, delta_x)
@@ -41,22 +41,37 @@ H = laplacian + V0
 plt.figure(1)       # we set the current figure
 
 # declaration of initial wave function
-psi = [exp(-(x - x0) ** 2 / (2*sigma ** 2)) for x in x_values]
+k = 1.
+#*np.exp(-1j * k * x)
+psi = [exp(-(x - x0) ** 2 / (2*sigma ** 2))*np.exp(-1j * k * x) for x in x_values]
+psi2 = psi / np.linalg.norm(psi)
 
 # we get the initial psi values squared (|psi|^2 = presence probability)
-y_values = [np.absolute(v) ** 2 for v in psi]
+y_values = [np.absolute(v) ** 2 for v in psi2]
 # we plot the result against the x values
 plt.plot(x_values, y_values, label='t = 0')
 
 # computation of the requested steps
 for i in range(nb_steps):
+    # represent the mid-result
+    if i % 20 == 0 and i != 0:
+        # we get the final psi values squared (|psi|^2 = presence probability)
+        y_values = [np.absolute(v) ** 2 for v in psi]
+        # we plot the result against the x values
+        plt.plot(x_values, y_values, label='t = %.1f' % (delta_t * i))
+
+    # EXPLICIT EULER METHOD
     # we use the format: 1j to specify that we want a complex number with real part = 0 and imaginary part = 1
     # we then do a dot product to multiply the computed matrix and the vector psi
-    psi = np.dot(psi, np.eye(n) - 1j * delta_t * H)
-    #normalization of the vector psi
+    #psi = np.dot(np.eye(n) - 1j * delta_t * H, psi)
+    # normalization of the vector psi
+    #psi = psi / np.linalg.norm(psi)
+
+    # IMPLICIT EULER METHOD
+    psi = np.dot(np.linalg.inv(np.eye(n) - 1j * delta_t * H), psi)
+    # normalization of the vector psi
     psi = psi / np.linalg.norm(psi)
-  
-    
+
 # we get the final psi values squared (|psi|^2 = presence probability)
 y_values = [np.absolute(v) ** 2 for v in psi]
 # we plot the result against the x values
