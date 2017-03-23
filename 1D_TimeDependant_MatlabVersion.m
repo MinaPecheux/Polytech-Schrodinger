@@ -19,16 +19,16 @@ H = laplacian + V0;
 
 psi = exp( - (x_values - x0).^2 / (2*sigma^2) ).^2;
 
-plot(x_values, abs(psi / norm(psi)).^2);
+plot(x_values, psi / norm(psi));
 hold on 
 
 for i=1:nb_steps
-%     % Explicit Euler method
-%      psi = psi + delta_t * (-1j) * H * psi;
-%      psi = psi / norm(psi);
+    % Explicit Euler method
+     psi = psi + delta_t * (-1j) * H * psi;
+     psi = psi / norm(psi);
 
-% Implicit Euler method
-psi = inv (eye(n) + 1j * delta_t * H) * psi; 
+% % Implicit Euler method
+% psi = inv (eye(n) + 1j * delta_t * H) * psi; 
 
 %      % cranck nicholson
 %      psi = inv(eye(n) + 1j * delta_t/2 * H) * (eye(n) - 1j * delta_t / 2 * H) * psi;  
