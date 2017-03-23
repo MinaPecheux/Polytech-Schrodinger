@@ -5,7 +5,7 @@ delta_x = 0.1;
 x0 = -1;
 sigma = 0.5;
 delta_t = 0.01;
-nb_steps = 14;
+nb_steps = 24;
 
 x_values = x_min: delta_x :x_max ;
 x_values = x_values'; 
@@ -17,9 +17,9 @@ V0 = zeros(n);
 
 H = laplacian + V0;
 
-psi = exp( - (x_values - x0).^2 / (2*sigma^2) ).^2;
+psi = exp( - (x_values - x0).^2 / (2*sigma^2) );
 
-plot(x_values, psi / norm(psi));
+plot(x_values, psi.^2 / norm(psi.^2));
 hold on 
 
 for i=1:nb_steps
@@ -33,7 +33,7 @@ for i=1:nb_steps
 %      % cranck nicholson
 %      psi = inv(eye(n) + 1j * delta_t/2 * H) * (eye(n) - 1j * delta_t / 2 * H) * psi;  
 
-     if mod(i,2) == 0
+     if mod(i,3) == 0
          plot(x_values, abs(psi).^2, 'r')
          hold on
      end
