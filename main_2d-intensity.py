@@ -15,12 +15,12 @@ from math import sqrt, sin
 
 
 # general variables
-x_min = 0
-x_max = 50
+x_min = 0.0
+x_max = 10.0
 lx = x_max - x_min
 
-y_min = 0
-y_max = 50
+y_min = 0.0
+y_max = 10.0
 ly = y_max - y_min
 
 n = 100     # number of subdivisions of the space
@@ -35,21 +35,31 @@ y_values = np.arange(y_min, y_max, delta_y)
 X, Y = np.meshgrid(x_values, y_values)
 
 # declaration of main matrices
-laplacian_x = -h ** 2 / (2 * delta_x**2) * (-2*np.eye(n) + np.diag(np.ones(n - 1), -1) + np.diag(np.ones(n - 1), 1))
-laplacian_y = -h ** 2 / (2 * delta_y**2) * (-2*np.eye(n) + np.diag(np.ones(n - 1), -1) + np.diag(np.ones(n - 1), 1))
-V0 = np.zeros(n)                                                # null potential
-V1 = np.asarray([x ** 2 for x in x_values])                     # harmonic potential
+# list that corresponds to the superior and inferior diagonals
+Diag_SupInf = [0 if i % n == 0 else 1 for i in range(1,n*n)]
+
+# declaration of main matrices
+laplacian_x =  1 / delta_x**2 * (-2*np.eye(n*n) + np.diag(Diag_SupInf, -1) + np.diag(Diag_SupInf, 1))
+laplacian_y =  1 / delta_y**2 * (-2*np.eye(n*n) + np.diag(np.ones(n*n - n), n) + np.diag(np.ones(n*n - n), -n))
+laplacian = -0.5 * (laplacian_x + laplacian_y)
+
+V0 = np.zeros((n*n, n*n))
+V1 = []
+for x in x_values:
+    for y in y_values:
+        V1.append(x**2 + y**2)
+V1 = np.diag(V1)                    # harmonic potential
 V2 = np.asarray([abs(round(sin(3*x))) for x in x_values])       # rectangular potential
 # here you choose which potential you add:
-H_x = laplacian_x + V0
-H_y = laplacian_y + V0
+H_x = laplacian_x + V1
+H_y = laplacian_y + V1
 # we get the eigen vectors of the H matrix
 # to get the eigen functions of the H operator
 eigen_values_x, eigen_vectors_x = np.linalg.eigh(H_x)
 eigen_values_y, eigen_vectors_y = np.linalg.eigh(H_y)
 
 # orbitals that we want to compute
-nx, ny = 2, 2
+nx, ny = 2,2
 
 # --------------------------------------------------------------
 # ANALYTIC solution representation: psi = wave function
