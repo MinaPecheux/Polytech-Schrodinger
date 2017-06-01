@@ -37,7 +37,7 @@ x_values = np.arange(x_min, x_max, delta_x)
 n = len(x_values)
 
 # First set up the figure, the axis, and the plot element we want to animate
-fig = plt.figure()
+fig = plt.figure(figsize=(8, 6), dpi=100)
 ax = plt.axes(xlim=(x_min, x_max), ylim=(0, 0.075))
 line, = ax.plot([], [], lw=2, color='blue')
 
@@ -84,13 +84,13 @@ plt.title('Tunnel effect (with Euler Implicit method), potential = %.1f' % poten
 plt.xlabel('Horizontal position')
 plt.ylabel('Wave function')
 ax.set_yticklabels([])
-#ax.set_xticklabels([])
+ax.set_xticklabels([])
 
 # save the animation as an mp4.  This requires ffmpeg or mencoder to be
 # installed.  The extra_args ensure that the x264 codec is used, so that
 # the video can be embedded in html5.  You may need to adjust this for
 # your system: for more information, see
 # http://matplotlib.sourceforge.net/api/animation_api.html
-anim.save('basic_animation.mp4', fps=20, extra_args=['-vcodec', 'libx264'])
+anim.save('basic_animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
 
 plt.show()
