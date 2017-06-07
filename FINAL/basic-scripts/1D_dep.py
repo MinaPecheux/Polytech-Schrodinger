@@ -227,4 +227,7 @@ def tunnel_effect():
     # we show the graphs
     plt.show()
 
-tunnel_effect()
+
+# choose the demo to run
+showcase_methods()
+

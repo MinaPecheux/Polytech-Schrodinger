@@ -15,8 +15,6 @@ x_min = -5.0
 x_max = 5.0
 n = 100       # number of subdivisions of the space
 delta_x = (x_max - x_min) / n
-h = 6.64E-34 / (2*pi)       # Dirac's constant
-m = 1E-39
 
 # we make the space discrete
 x_values = np.arange(x_min, x_max, delta_x)

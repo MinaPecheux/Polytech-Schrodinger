@@ -21,7 +21,6 @@ ly = y_max - y_min
 n = 50     # number of subdivisions of the space
 delta_x = lx / n
 delta_y = ly / n
-h = 6.64E-34
 
 # we make the space discrete
 x_values = np.arange(x_min, x_max, delta_x)

@@ -32,8 +32,8 @@ basic-scripts/					Dossier contenant les fichiers essentiels pour la modélisati
 									en 1D à l'aide de plusieurs schémas numériques (Euler explicite, Euler implicite, Cranck-Nicholson)
 movies/							Dossier contenant des enregistrements du début de l'évolution temporelle d'un paquet d'onde gaussien
 								(pour l'étude des effets de réflexion et de l'effet tunnel)
-	reflection_animation.mp4 		Enregistrement des effets de réflexion (400 images)
-	tunnel_animation.mp4 			Enregistrement de l'effet tunnel (400 images)
+	reflection_animation.mp4 		Enregistrement des effets de réflexion (300 images)
+	tunnel_animation.mp4 			Enregistrement de l'effet tunnel (300 images)
 
 
 III. Installation & Lancement
@@ -44,6 +44,14 @@ Si nécessaire, ceux-ci peuvent être installés avec : 'pip install numpy matpl
 Chaque script peut être lancé en utilisant la commande terminal : 'python script.py'
 (Attention à vérifier que les packages ont été installés pour la bonne version de Python !)
 
+Le script 1D_indep.py peut être édité (dans la partie de déclaration des variables, ligne 31) par l'utilisateur pour choisir un potentiel parmi ceux proposés.
+Le script 1D_dep.py peut être édité (dernière ligne) par l'utilisateur pour choisir la démo à montrer :
+	- showcase_methods() montre le résultat de l'implémentation pour les trois méthodes numériques présentées
+	- reflection_effect() présente l'effet de réflexion pour un paquet d'onde gaussien avec la méthode d'Euler implicite
+	- tunnel_effect() présente l'effet tunnel pour un paquet d'onde gaussien avec la méthode d'Euler implicite
+
+
 IV. Pistes de réflexion
 -----------------------
 Ce projet nous a permis d'avoir une première idée des principes et des questions posés pour le monde quantique, cependant ce n'est qu'un premier pas ! De nombreuses améliorations et réflexions nouvelles sont possibles à partir de là, par exemple l'implémentation des équations de Schrödinger en 3D et des interactions entre plusieurs particules, l'optimisation de notre code et la mise en place de schémas numériques plus performant, l'étude de phénomènes quantiques plus complexes...
+
